@@ -54,7 +54,7 @@ shadowJar {
     relocate 'co.aikar.locales', 'io.github.divinerealms.locales'
 }
 
-def targetJavaVersion = 11
+def targetJavaVersion = 8
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
