@@ -92,8 +92,8 @@ public class RostersCommand extends BaseCommand {
 
     getHelper().getGroupManager().createAndLoadGroup(name).thenApplyAsync(group -> {
       if (args.length == 2) {
-        group.data().add(WeightNode.builder(100).withContext("server", "football").build());
-        group.data().add(MetaNode.builder("team", tag).withContext("server", "football").build());
+        group.data().add(WeightNode.builder(100).build());
+        group.data().add(MetaNode.builder("team", tag).build());
 
         String team = name.toUpperCase(), type = "main";
         if (!getDataManager().configExists(getTeamData(), type)) {
@@ -109,8 +109,8 @@ public class RostersCommand extends BaseCommand {
         getDataManager().getConfig().set(team + ".players", players);
         getDataManager().saveConfig();
       } else if (args[2].equalsIgnoreCase("b")) {
-        group.data().add(WeightNode.builder(99).withContext("server", "football").build());
-        group.data().add(MetaNode.builder("b", tag).withContext("server", "football").build());
+        group.data().add(WeightNode.builder(99).build());
+        group.data().add(MetaNode.builder("b", tag).build());
 
         String team = name.toUpperCase(), type = "juniors";
         if (!getDataManager().configExists(getTeamData(), type)) {
@@ -129,10 +129,10 @@ public class RostersCommand extends BaseCommand {
 
       for (String permission : getHelper().getPermissions()) {
         permission = permission.replace("%team%", name.toLowerCase());
-        group.data().add(PermissionNode.builder(permission).withContext("server", "football").build());
+        group.data().add(PermissionNode.builder(permission).build());
       }
 
-      getLogger().send("fcfa", Lang.ROSTERS_TEAM_CREATED.getConfigValue(new String[]{tag}));
+      getLogger().send("kcfa", Lang.ROSTERS_TEAM_CREATED.getConfigValue(new String[]{tag}));
       return group;
     }).thenCompose(getHelper().getGroupManager()::saveGroup);
   }
@@ -151,7 +151,7 @@ public class RostersCommand extends BaseCommand {
           getHelper().groupGetMetaWeight(name) == 99 ? "juniors" : null;
 
       getHelper().getGroupManager().deleteGroup(getHelper().getGroup(name));
-      getLogger().send("fcfa", Lang.ROSTERS_TEAM_DELETED.getConfigValue(new String[]{sender.getName(), name}));
+      getLogger().send("kcfa", Lang.ROSTERS_TEAM_DELETED.getConfigValue(new String[]{sender.getName(), name}));
     } else getLogger().send(sender, Lang.ROSTERS_NOT_FOUND.getConfigValue(new String[]{"tim"}));
 
     if (!getDataManager().configExists(getTeamData(), type)) {
@@ -168,8 +168,8 @@ public class RostersCommand extends BaseCommand {
     if (getDataManager().getConfig().get(name) != null) {
       getDataManager().getConfig().set(name, null);
       getDataManager().saveConfig();
-      getLogger().send("fcfa", Lang.ROSTERS_DELETED_FILES.getConfigValue(new String[]{name.toUpperCase()}));
-    } else getLogger().send("fcfa", Lang.ROSTERS_NOT_FOUND.getConfigValue(new String[]{"tim"}));
+      getLogger().send("kcfa", Lang.ROSTERS_DELETED_FILES.getConfigValue(new String[]{name.toUpperCase()}));
+    } else getLogger().send("kcfa", Lang.ROSTERS_NOT_FOUND.getConfigValue(new String[]{"tim"}));
   }
 
   @Subcommand("add")
@@ -234,7 +234,7 @@ public class RostersCommand extends BaseCommand {
       }
 
       getHelper().playerAddGroup(target.getUniqueId(), team);
-      getLogger().send("fcfa", Lang.ROSTERS_USER_ADDED.getConfigValue(new String[]{sender.getName(), target.getName(), team.toUpperCase()}));
+      getLogger().send("kcfa", Lang.ROSTERS_USER_ADDED.getConfigValue(new String[]{sender.getName(), target.getName(), team.toUpperCase()}));
     } else getLogger().send(sender, Lang.INSUFFICIENT_PERMISSION.getConfigValue(null));
   }
 
@@ -276,7 +276,7 @@ public class RostersCommand extends BaseCommand {
       getDataManager().saveConfig();
 
       getHelper().playerRemoveGroup(target.getUniqueId(), team);
-      getLogger().send("fcfa", Lang.ROSTERS_USER_REMOVED.getConfigValue(new String[]{sender.getName(), target.getName(), team.toUpperCase()}));
+      getLogger().send("kcfa", Lang.ROSTERS_USER_REMOVED.getConfigValue(new String[]{sender.getName(), target.getName(), team.toUpperCase()}));
     } else getLogger().send(sender, Lang.INSUFFICIENT_PERMISSION.getConfigValue(null));
   }
 
@@ -410,7 +410,7 @@ public class RostersCommand extends BaseCommand {
   }
 
   private boolean hasAccess(Player player) {
-    return getHelper().playerInGroup(player.getUniqueId(), "fcfa");
+    return getHelper().playerInGroup(player.getUniqueId(), "kcfa");
   }
 
   private boolean isManager(Player player, String team) {

@@ -26,7 +26,7 @@ public class Helper {
   private final Plugin plugin;
   private final UserManager userManager;
   private GroupManager groupManager;
-  private final String[] permissions = new String[]{"tab.group.%team%"};
+  private final String[] permissions = {"tab.group.%team%"};
   @Setter
   private LuckPerms luckPermsAPI;
 

@@ -182,7 +182,7 @@ public class PerRosterGUI extends InventoryGUI {
   }
 
   private boolean hasAccess(Player player) {
-    return getHelper().playerInGroup(player.getUniqueId(), "fcfa");
+    return getHelper().playerInGroup(player.getUniqueId(), "kcfa");
   }
 
   private InventoryButton createPlayerHead(FileConfiguration playerData, String title, String playerName, String... lore) {

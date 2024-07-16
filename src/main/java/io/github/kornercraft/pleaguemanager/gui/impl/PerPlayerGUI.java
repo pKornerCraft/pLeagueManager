@@ -76,14 +76,14 @@ public class PerPlayerGUI extends InventoryGUI {
 
                   getHelper().playerAddPermission(targetUUID, "tab.group." + teamName + "-director");
                   getHelper().playerAddGroup(targetUUID, "director");
-                  getLogger().send("fcfa", Lang.ROSTERS_SET_ROLE.getConfigValue(new String[]{targetName, "MANAGER", teamName.toUpperCase()}));
+                  getLogger().send("kcfa", Lang.ROSTERS_SET_ROLE.getConfigValue(new String[]{targetName, "MANAGER", teamName.toUpperCase()}));
                 } else {
                   getDataManager().getConfig().set(teamName.toUpperCase() + ".manager", null);
                   getDataManager().saveConfig();
 
                   getHelper().playerRemovePermission(targetUUID, "tab.group." + teamName + "-director");
                   getHelper().playerRemoveGroup(targetUUID, "director");
-                  getLogger().send("fcfa", Lang.ROSTERS_SET_ROLE.getConfigValue(new String[]{targetName, "PLAYER", teamName.toUpperCase()}));
+                  getLogger().send("kcfa", Lang.ROSTERS_SET_ROLE.getConfigValue(new String[]{targetName, "PLAYER", teamName.toUpperCase()}));
                 }
                 event.getWhoClicked().closeInventory();
                 getGuiManager().openGUI(new PerRosterGUI(getUtilManager(), getGuiManager()), (Player) event.getWhoClicked());
@@ -123,7 +123,7 @@ public class PerPlayerGUI extends InventoryGUI {
                   getDataManager().setConfig(getPlayerData(), targetName);
                   getDataManager().getConfig().set("team", null);
                   getDataManager().saveConfig();
-                  getLogger().send("fcfa", Lang.ROSTERS_USER_REMOVED.getConfigValue(new String[]{player.getName(), targetName, teamName.toUpperCase()}));
+                  getLogger().send("kcfa", Lang.ROSTERS_USER_REMOVED.getConfigValue(new String[]{player.getName(), targetName, teamName.toUpperCase()}));
                 } else {
                   getHelper().playerAddGroup(getGuiManager().getTarget().getUniqueId(), teamName);
                   List<String> players = getDataManager().getConfig().getStringList(teamName.toUpperCase() + ".players");
@@ -134,7 +134,7 @@ public class PerPlayerGUI extends InventoryGUI {
                   getDataManager().setConfig(getPlayerData(), targetName);
                   getDataManager().getConfig().set("team", teamName.toUpperCase());
                   getDataManager().saveConfig();
-                  getLogger().send("fcfa", Lang.ROSTERS_USER_ADDED.getConfigValue(new String[]{player.getName(), targetName, teamName.toUpperCase()}));
+                  getLogger().send("kcfa", Lang.ROSTERS_USER_ADDED.getConfigValue(new String[]{player.getName(), targetName, teamName.toUpperCase()}));
                 }
                 event.getWhoClicked().closeInventory();
                 getGuiManager().openGUI(new PerRosterGUI(getUtilManager(), getGuiManager()), (Player) event.getWhoClicked());
