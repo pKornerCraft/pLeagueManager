@@ -269,14 +269,14 @@ public class ResultCommand extends BaseCommand {
             return;
           }
           league = true;
-          home = getHelper().groupHasMeta(args[0], "team") ?
-                  getHelper().getGroupMeta(args[0], "team") :
-                  getHelper().groupHasMeta(args[0], "b") ?
-                          getHelper().getGroupMeta(args[0], "b") : HOME_NAME;
-          away = getHelper().groupHasMeta(args[1], "team") ?
-                  getHelper().getGroupMeta(args[1], "team") :
-                  getHelper().groupHasMeta(args[1], "b") ?
-                          getHelper().getGroupMeta(args[1], "b") : AWAY_NAME;
+          home = getHelper().groupHasMeta(args[0], "prefix") ?
+                  getHelper().getGroupMeta(args[0], "prefix") :
+                  getHelper().groupHasMeta(args[0], "prefix") ?
+                          getHelper().getGroupMeta(args[0], "prefix") : HOME_NAME;
+          away = getHelper().groupHasMeta(args[1], "prefix") ?
+                  getHelper().getGroupMeta(args[1], "prefix") :
+                  getHelper().groupHasMeta(args[1], "prefix") ?
+                          getHelper().getGroupMeta(args[1], "prefix") : AWAY_NAME;
           Bukkit.dispatchCommand(sender, "warp " + args[0] + "top");
           Bukkit.dispatchCommand(sender, "setspawn");
           for (Player player : getPlugin().getServer().getOnlinePlayers()) {

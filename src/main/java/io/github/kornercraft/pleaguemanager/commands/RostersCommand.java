@@ -334,9 +334,9 @@ public class RostersCommand extends BaseCommand {
         return;
       }
 
-      if (!getHelper().playerGetMeta(target.getUniqueId(), "team").equals("&8&oNema")) {
+      if (!getHelper().playerGetMeta(target.getUniqueId(), "prefix").equals("&8&oNema")) {
         team = getHelper().playerGetTeam(target.getUniqueId(), 100);
-      } else if (!getHelper().playerGetMeta(target.getUniqueId(), "b").equals("&r")) {
+      } else if (!getHelper().playerGetMeta(target.getUniqueId(), "prefix").equals("&r")) {
         team = getHelper().playerGetTeam(target.getUniqueId(), 99);
       }
 
