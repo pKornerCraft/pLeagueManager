@@ -11,7 +11,7 @@ import io.github.kornercraft.pleaguemanager.managers.UtilManager;
 import io.github.kornercraft.pleaguemanager.utils.Helper;
 import io.github.kornercraft.pleaguemanager.utils.Logger;
 import lombok.Getter;
-import net.luckperms.api.node.types.MetaNode;
+import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.WeightNode;
 import org.apache.commons.lang.StringUtils;
@@ -93,8 +93,7 @@ public class RostersCommand extends BaseCommand {
 
     getHelper().getGroupManager().createAndLoadGroup(name).thenApplyAsync(group -> {
       if (args.length == 2) {
-        group.data().add(WeightNode.builder(100).build());
-        group.data().add(MetaNode.builder("team", tag).build());
+        group.data().add(PrefixNode.builder(tag, 100).build());
 
         String team = name.toUpperCase(), type = "main";
         if (!getDataManager().configExists(getTeamData(), type)) {
@@ -110,8 +109,7 @@ public class RostersCommand extends BaseCommand {
         getDataManager().getConfig(type).set(team + ".players", players);
         getDataManager().saveConfig(type);
       } else if (args[2].equalsIgnoreCase("b")) {
-        group.data().add(WeightNode.builder(99).build());
-        group.data().add(MetaNode.builder("b", tag).build());
+        group.data().add(PrefixNode.builder(tag, 100).build());
 
         String team = name.toUpperCase(), type = "juniors";
         if (!getDataManager().configExists(getTeamData(), type)) {
