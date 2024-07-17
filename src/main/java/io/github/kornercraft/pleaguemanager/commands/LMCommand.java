@@ -230,7 +230,6 @@ public class LMCommand extends BaseCommand {
         Node node = Node.builder("group.suspend")
                 .value(true)
                 .expiry(time.toMilliseconds(), TimeUnit.MILLISECONDS)
-                .withContext("server", "football")
                 .build();
         DataMutateResult result = user.data().add(node);
 
