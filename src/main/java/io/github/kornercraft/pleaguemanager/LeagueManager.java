@@ -2,16 +2,9 @@ package io.github.kornercraft.pleaguemanager;
 
 import co.aikar.commands.BukkitCommandManager;
 import io.github.kornercraft.pleaguemanager.commands.*;
-import io.github.kornercraft.pleaguemanager.commands.timers.OXECommand;
-import io.github.kornercraft.pleaguemanager.commands.timers.ResultCommand;
-import io.github.kornercraft.pleaguemanager.commands.timers.TXFCommand;
-import io.github.kornercraft.pleaguemanager.commands.timers.TimerCommand;
-import io.github.kornercraft.pleaguemanager.configs.Config;
-import io.github.kornercraft.pleaguemanager.configs.Lang;
-import io.github.kornercraft.pleaguemanager.managers.ConfigManager;
-import io.github.kornercraft.pleaguemanager.managers.GUIManager;
-import io.github.kornercraft.pleaguemanager.managers.ListenerManager;
-import io.github.kornercraft.pleaguemanager.managers.UtilManager;
+import io.github.kornercraft.pleaguemanager.commands.timers.*;
+import io.github.kornercraft.pleaguemanager.configs.*;
+import io.github.kornercraft.pleaguemanager.managers.*;
 import lombok.Getter;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
@@ -22,9 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Setter
 @Getter
 public class LeagueManager extends JavaPlugin {
-  private ConfigManager messagesFile = new ConfigManager(this, "");
+  private ConfigManager configManager = new ConfigManager(this, "");
   private YamlConfiguration config;
   private LuckPerms luckPermsAPI = null;
+  private boolean essentialsLoaded = false;
   private UtilManager utilManager;
   private GUIManager guiManager;
   private ListenerManager listenerManager;
@@ -56,6 +50,7 @@ public class LeagueManager extends JavaPlugin {
 
   private void setupConfig() {
     Config.setup(this);
+    configManager.loadConfig("#pLeague Manager Config", "config.yml");
     config = Config.getConfig("config.yml");
   }
 
@@ -76,25 +71,25 @@ public class LeagueManager extends JavaPlugin {
   }
 
   public void setupMessages() {
-    getMessagesFile().createNewFile("messages.yml", "Loading messages.yml", "LeagueManager Messages");
+    getConfigManager().createNewFile("messages.yml", "Loading messages.yml", "LeagueManager Messages");
     loadMessages();
   }
 
   private void loadMessages() {
-    Lang.setFile(getMessagesFile().getConfig("messages.yml"));
+    Lang.setFile(getConfigManager().getConfig("messages.yml"));
 
     for (Lang value : Lang.values())
-      getMessagesFile().getConfig("messages.yml").addDefault(value.getPath(), value.getDefault());
+      getConfigManager().getConfig("messages.yml").addDefault(value.getPath(), value.getDefault());
 
-    getMessagesFile().getConfig("messages.yml").options().copyDefaults(true);
-    getMessagesFile().saveConfig("messages.yml");
+    getConfigManager().getConfig("messages.yml").options().copyDefaults(true);
+    getConfigManager().createNewFile("messages.yml", "Loading messages.yml", "LeagueManager Messages");
   }
 
   private void setupCommands() {
     BukkitCommandManager commandManager = new BukkitCommandManager(this);
 
     commandManager.enableUnstableAPI("help");
-    commandManager.registerCommand(new LMCommand(getUtilManager(), this));
+    commandManager.registerCommand(new LMCommand(getUtilManager()));
     commandManager.registerCommand(new RostersCommand(getUtilManager(), getGuiManager()));
     commandManager.registerCommand(new MigrateCommand(getUtilManager()));
     commandManager.registerCommand(new StatisticsCommand(getUtilManager()));

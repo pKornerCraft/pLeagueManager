@@ -27,6 +27,7 @@ public class Helper {
   private final UserManager userManager;
   private GroupManager groupManager;
   private final String[] permissions = {"tab.group.%team%"};
+
   @Setter
   private LuckPerms luckPermsAPI;
 
