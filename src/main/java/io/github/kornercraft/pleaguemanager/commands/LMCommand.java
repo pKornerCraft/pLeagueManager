@@ -24,7 +24,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Getter
-@CommandAlias("leaguemanager|lm")
+@CommandAlias("leaguemanager|plm")
 public class LMCommand extends BaseCommand {
   private final LeagueManager instance;
   private final UtilManager utilManager;

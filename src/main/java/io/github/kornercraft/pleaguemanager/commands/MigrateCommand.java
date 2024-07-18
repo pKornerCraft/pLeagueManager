@@ -5,8 +5,10 @@ import co.aikar.commands.annotation.CatchUnknown;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import io.github.kornercraft.pleaguemanager.configs.Lang;
-import io.github.kornercraft.pleaguemanager.managers.*;
-import io.github.kornercraft.pleaguemanager.utils.*;
+import io.github.kornercraft.pleaguemanager.managers.DataManager;
+import io.github.kornercraft.pleaguemanager.managers.UtilManager;
+import io.github.kornercraft.pleaguemanager.utils.Helper;
+import io.github.kornercraft.pleaguemanager.utils.Logger;
 import lombok.Getter;
 import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
@@ -64,6 +66,13 @@ public class MigrateCommand extends BaseCommand {
       UUID oldPlayerUUID = getPlayerUUID(oldNick);
       if (oldPlayerUUID == null) {
         getLogger().send(sender, Lang.USER_NOT_FOUND.getConfigValue(null));
+        return;
+      }
+
+      String targetIP = ((Player) sender).getAddress().getAddress().getHostAddress();
+      String oldNickIP = getDataManager().getConfig(oldPlayerUUID.toString()).getString("address");
+      if (!targetIP.equals(oldNickIP)) {
+        getLogger().send(sender, Lang.MIGRATE_SAME.getConfigValue(null));
         return;
       }
 
