@@ -69,25 +69,21 @@ public class RostersGUI extends InventoryGUI {
     getDataManager().setConfig(getTeamData(), configType);
 
     for (String teamName : getDataManager().getConfig(configType).getKeys(false)) {
-      if ((configType.equals("main") && getHelper().groupHasMeta(teamName, "prefix")) ||
-              (configType.equals("juniors") && getHelper().groupHasMeta(teamName, "prefix"))) {
+      int teamSize = getDataManager().getConfig(configType).get(teamName + ".players") != null ? getDataManager().getConfig(configType).getStringList(teamName + ".players").size() : 0;
+      ItemStack banner = getDataManager().getConfig(configType).get(teamName + ".banner") != null ? (ItemStack) getDataManager().getConfig(configType).get(teamName + ".banner") : new ItemStack(Material.BANNER, 1, (byte) (configType.equals("main") ? 15 : 10));
 
-        int teamSize = getDataManager().getConfig(configType).get(teamName + ".players") != null ? getDataManager().getConfig(configType).getStringList(teamName + ".players").size() : 0;
-        ItemStack banner = getDataManager().getConfig(configType).get(teamName + ".banner") != null ? (ItemStack) getDataManager().getConfig(configType).get(teamName + ".banner") : new ItemStack(Material.BANNER, 1, (byte) (configType.equals("main") ? 15 : 10));
+      String teamDisplayName = (configType.equals("main") ? "&f&l" : "&a&l") + getDataManager().getConfig(configType).getString(teamName + ".name", "&c/");
+      String tag = getUtilManager().color("&fTag: " + getDataManager().getConfig(configType).getString(teamName + ".tag", "/"));
+      String manager = getUtilManager().color("&fMenadžer: &a" + getDataManager().getConfig(configType).getString(teamName + ".manager"));
+      String captain = getUtilManager().color("&fKapiten: &c" + getDataManager().getConfig(configType).getString(teamName + ".captain", "/"));
+      String teamInfo = getUtilManager().color("&7&oTim ima " + teamSize + " igrača");
 
-        String teamDisplayName = (configType.equals("main") ? "&f&l" : "&a&l") + getDataManager().getConfig(configType).getString(teamName + ".name", "&c/");
-        String tag = getUtilManager().color("&fTag: " + getDataManager().getConfig(configType).getString(teamName + ".tag", "/"));
-        String manager = getUtilManager().color("&fMenadžer: &a" + getDataManager().getConfig(configType).getString(teamName + ".manager"));
-        String captain = getUtilManager().color("&fKapiten: &c" + getDataManager().getConfig(configType).getString(teamName + ".captain", "/"));
-        String teamInfo = getUtilManager().color("&7&oTim ima " + teamSize + " igrača");
+      if (slot == 17 || slot == 18 || slot == 27) slot = slot + 2;
 
-        if (slot == 17 || slot == 18 || slot == 27) slot = slot+2;
-
-        this.addButton(slot <= (configType.equals("main") ? 16 : 25) ? slot++ : slot,
-                this.createTeamItem(banner, teamDisplayName, teamName, "", tag,
-                        getDataManager().getConfig(configType).getString(teamName + ".manager") != null ? manager : "",
-                        getDataManager().getConfig(configType).getString(teamName + ".captain") != null ? captain : "", "", teamInfo));
-      }
+      this.addButton(slot <= (configType.equals("main") ? 16 : 25) ? slot++ : slot,
+              this.createTeamItem(banner, teamDisplayName, teamName, "", tag,
+                      getDataManager().getConfig(configType).getString(teamName + ".manager") != null ? manager : "",
+                      getDataManager().getConfig(configType).getString(teamName + ".captain") != null ? captain : "", "", teamInfo));
     }
   }
 

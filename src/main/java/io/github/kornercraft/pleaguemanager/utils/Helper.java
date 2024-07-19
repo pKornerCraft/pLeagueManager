@@ -4,6 +4,7 @@ import io.github.kornercraft.pleaguemanager.LeagueManager;
 import lombok.Getter;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.cacheddata.CachedData;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.cacheddata.CachedPermissionData;
 import net.luckperms.api.model.group.Group;
@@ -14,6 +15,7 @@ import net.luckperms.api.node.Node;
 import net.luckperms.api.node.types.InheritanceNode;
 import net.luckperms.api.node.types.MetaNode;
 import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.node.types.PrefixNode;
 import org.bukkit.plugin.Plugin;
 
 import java.time.Duration;
@@ -173,6 +175,12 @@ public class Helper {
     Group group = getGroup(groupName);
     CachedMetaData metaData = group.getCachedData().getMetaData();
     return metaData.getMeta().containsKey(metaType);
+  }
+
+  public boolean groupHasPrefix(String groupName) {
+    Group group = getGroup(groupName);
+    CachedMetaData metaData = group.getCachedData().getMetaData();
+    return metaData.getPrefix() != null && !metaData.getPrefix().isEmpty();
   }
 
   public int groupGetMetaWeight(String groupName) {
